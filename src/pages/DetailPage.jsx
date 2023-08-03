@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DetailCatalog from "../components/DetailCatalog";
+import { getProduct } from "../utils/local_data";
+import { useParams } from "react-router-dom";
 
 function DetailPage() {
     const [count, setCount] = useState(1);
+    const [product, setProduct] = useState(null);
+    const { id } = useParams();
 
     const increment = () => setCount((prevCount) => prevCount + 1);
 
     const decrement = () => setCount((prevCount) => prevCount - 1);
 
     const handleChange = (event) => {
-        // Mengambil nilai inputan dari event dan memastikan tidak melebihi maxLength
         const newValue = parseInt(
             event.target.value
                 .slice(0, event.target.maxLength)
@@ -18,6 +21,15 @@ function DetailPage() {
         setCount(newValue);
     };
 
+    useEffect(() => {
+        const fetchProduct = () => {
+            const data = getProduct(id);
+            setProduct(data);
+        };
+
+        fetchProduct();
+    }, [id]);
+
     return (
         <div className="detail-page">
             <DetailCatalog
@@ -25,6 +37,7 @@ function DetailPage() {
                 increment={increment}
                 decrement={decrement}
                 handleChange={handleChange}
+                {...product}
             />
         </div>
     );

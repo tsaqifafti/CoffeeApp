@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
@@ -10,15 +11,22 @@ import LoginPage from "./pages/LoginPage";
 function App() {
     return (
         <>
-            {/* <LoginPage />
-            <RegisterPage /> */}
+            <Routes>
+                <Route path="/masuk" element={<LoginPage />} />
+                <Route path="/daftar" element={<RegisterPage />} />
+            </Routes>
             <header>
                 <Navigation />
             </header>
             <main>
-                <CatalogPage />
-                {/* <HomePage /> */}
-                {/* <DetailPage /> */}
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route
+                        path="/catalog/categories/:Category"
+                        element={<CatalogPage />}
+                    />
+                    <Route path="/detail/:id" element={<DetailPage />} />
+                </Routes>
             </main>
             <FooterItem />
         </>

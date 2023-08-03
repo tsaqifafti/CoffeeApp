@@ -3,7 +3,7 @@ import React from "react";
 function Register() {
     return (
         <div
-            class="card p-5"
+            className="card p-5"
             style={{
                 width: "30rem",
                 boxShadow: "2px 10px 4px rgba(0, 0, 0, 0.2)",
@@ -12,18 +12,18 @@ function Register() {
         >
             <form>
                 <h1
-                    class="fs-4"
+                    className="fs-4"
                     style={{ marginBottom: "10px", textAlign: "center" }}
                 >
                     Register
                 </h1>
-                <div class="mb-3">
-                    <label for="nameRegister" class="form-label">
+                <div className="mb-3">
+                    <label for="nameRegister" className="form-label">
                         Name
                     </label>
                     <input
                         type="name"
-                        class="form-control"
+                        className="form-control"
                         id="nameRegister"
                         style={{
                             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
@@ -31,13 +31,13 @@ function Register() {
                         }}
                     />
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">
+                <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">
                         Email address
                     </label>
                     <input
                         type="email"
-                        class="form-control"
+                        className="form-control"
                         id="exampleInputEmail1"
                         style={{
                             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
@@ -45,13 +45,13 @@ function Register() {
                         }}
                     />
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">
+                <div className="mb-3">
+                    <label for="exampleInputPassword1" className="form-label">
                         Password
                     </label>
                     <input
                         type="password"
-                        class="form-control"
+                        className="form-control"
                         id="exampleInputPassword1"
                         style={{
                             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
@@ -59,7 +59,7 @@ function Register() {
                         }}
                     />
                 </div>
-                <button type="submit" class="btn bgc_btn">
+                <button type="submit" className="btn bgc_btn">
                     Submit
                 </button>
             </form>

@@ -7,13 +7,13 @@ function DetailCatalogAction({ count, increment, decrement, handleChange }) {
             <div>
                 <button
                     disabled={count <= 1}
-                    class="btn btn_action__count"
+                    className="btn btn_action__count"
                     onClick={decrement}
                 >
                     <FiMinusCircle />
                 </button>
                 <input
-                    class="text-center input__border"
+                    className="text-center input__border"
                     type="number"
                     maxLength={2}
                     onChange={handleChange}
@@ -21,14 +21,14 @@ function DetailCatalogAction({ count, increment, decrement, handleChange }) {
                 />
                 <button
                     disabled={count >= 20}
-                    class="btn btn_action__count"
+                    className="btn btn_action__count"
                     onClick={increment}
                 >
                     <FiPlusCircle />
                 </button>
             </div>
             <div>
-                <button class="btn bgc_btn">Pesan Sekarang</button>
+                <button className="btn bgc_btn">Pesan Sekarang</button>
             </div>
         </div>
     );

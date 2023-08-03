@@ -1,6 +1,7 @@
 :root {
     --primary: #46494c;
     --secondary: #4c5c68;
+    --for-text: #749bc2;
     --background: #dcdcdd;
     --surface: #dcdcdd;
     --on-background: #cfcfd0;
@@ -52,6 +53,10 @@ a {
 body {
     font-family: "Inria Serif", sans-serif;
     background-color: var(--background);
+}
+
+.category_card.selected {
+    color: #749bc2; /* Ubah warna sesuai keinginan Anda */
 }
 
 /* HEADER STYLE */
@@ -117,6 +122,8 @@ header {
 
 .pointer_nav {
     cursor: pointer;
+    color: var(--primary);
+    text-decoration: none;
 }
 
 .padding_nav button {
@@ -133,6 +140,12 @@ header {
 .bgc_detail {
     background-color: var(--background);
     border: none;
+}
+
+.category_card {
+    cursor: pointer;
+    background-color: var(--on-background);
+    text-align: center;
 }
 
 /* MAIN STYLE */
@@ -152,7 +165,7 @@ main {
     text-align: center;
 }
 
-.bgc_card a {
+.bgc_card button {
     background-color: var(--primary);
     color: var(--on-background);
 }
