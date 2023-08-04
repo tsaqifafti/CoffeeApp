@@ -11,7 +11,7 @@ function CatalogList({ filteredCatalog, setPilihCategory }) {
                     {filteredCatalog.map((item) => (
                         <div
                             key={item.id}
-                            className="col-lg-2 col-md-6 col-sm-12"
+                            className="col-lg-2 col-sm-6 col-md-12"
                         >
                             <CatalogItem id={item.id} {...item} />
                         </div>

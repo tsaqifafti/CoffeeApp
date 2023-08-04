@@ -30,18 +30,18 @@ function CatalogCategory({ setPilihCategory }) {
                 </div>
                 <div className="col my-4">
                     <div
-                        className={getCategoryCardClassName("cofee")}
-                        onClick={() => categoryHandler("cofee")}
+                        className={getCategoryCardClassName("robusta")}
+                        onClick={() => categoryHandler("robusta")}
                     >
-                        <div className="card-body">Coffee</div>
+                        <div className="card-body">Robusta</div>
                     </div>
                 </div>
                 <div className="col my-4">
                     <div
-                        className={getCategoryCardClassName("tea")}
-                        onClick={() => categoryHandler("tea")}
+                        className={getCategoryCardClassName("arabica")}
+                        onClick={() => categoryHandler("arabica")}
                     >
-                        <div className="card-body">Tea</div>
+                        <div className="card-body">Arabica</div>
                     </div>
                 </div>
             </div>

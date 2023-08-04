@@ -5,7 +5,7 @@ function HeroImage() {
     return (
         <>
             <div className="hero">
-                <p>kopi abc</p>
+                <p>toko abc</p>
                 <Link to={"/catalog/categories/Semua"}>
                     <button>Pesan biji kopi</button>
                 </Link>
