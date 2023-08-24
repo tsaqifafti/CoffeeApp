@@ -323,4 +323,8 @@ export {
     deleteProduk,
     getAllCategory,
     addProduct,
+    KonfrimasiPembayaran,
+    GetAllTransactionUser,
+    modifyProduct,
+    getProductDetail
 };
