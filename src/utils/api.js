@@ -255,6 +255,54 @@ async function addProduct(product) {
     }
 }
 
+async function GetAllTransactionUser() {
+    try {
+        const hitApiLogin = await axios.get(
+            `${BASE_URL}/api/v1/transaction/listuser`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                },
+            }
+        );
+
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
+
+
+    } catch (error) {
+        return { error: true, data: null };
+    }
+}
+
+async function KonfrimasiPembayaran(data,id) {
+    try {
+        console.log("data : ", data, "id : ",id);
+        const hitApiLogin = await axios.patch(
+            `${BASE_URL}/api/v1/user/transaction/confirm/${id}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                },
+            }
+        );
+
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
+
+
+    } catch (error) {
+        return { error: true, data: null };
+    }
+}
+
 export {
     login,
     loginAdmin,
@@ -266,4 +314,6 @@ export {
     deleteProduk,
     getAllCategory,
     addProduct,
+    GetAllTransactionUser,
+    KonfrimasiPembayaran,
 };

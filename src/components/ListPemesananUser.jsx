@@ -1,7 +1,9 @@
-import React from "react";
+import {React , useState, useEffect} from "react";
 import ItemPemesananUser from "./ItemPemesananUser";
 
-function ListPemesananUser() {
+function ListPemesananUser({data}) {
+    
+
     return (
         <div
             class="list-group mx-5"
@@ -13,7 +15,7 @@ function ListPemesananUser() {
             }}
         >
             <h2>List Pemesanan</h2>
-            <ItemPemesananUser />
+            <ItemPemesananUser data={data}/>
         </div>
     );
 }

@@ -13,10 +13,12 @@ import LoginAdminPage from "./pages/LoginAdminPage";
 import DashboardAdminPage from "./pages/DashboardAdminPage";
 import DashboardBuktiPembayaranPage from "./pages/DashboardBuktiPembayaranPage";
 import DashboardProdukPage from "./pages/DashboardProdukPage";
+import { GetAllTransactionUser } from "./utils/api";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true); // New state for loading
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     useEffect(() => {
         // Simulate an async token check
@@ -29,6 +31,7 @@ function App() {
         };
 
         checkToken();
+        
     }, []);
 
     const location = useLocation();
