@@ -5,6 +5,7 @@ import {
     deleteProduk,
     getAllCategory,
     addProduct,
+    modifyProduct,
 } from "../utils/api";
 
 function DashboardProdukPage() {
@@ -14,6 +15,11 @@ function DashboardProdukPage() {
     function onAddProdukHandler(product) {
         addProduct(product);
         window.location.reload();
+    }
+
+    function onModifyProdukHandler(modifyProduk, id) {
+        modifyProduct(modifyProduk, id);
+        // window.location.reload();
     }
 
     async function onDeleteHandler(id) {
@@ -72,6 +78,7 @@ function DashboardProdukPage() {
             onDelete={onDeleteHandler}
             categoryList={categoryList}
             addProduk={onAddProdukHandler}
+            modifyProduk={onModifyProdukHandler}
         />
     );
 }

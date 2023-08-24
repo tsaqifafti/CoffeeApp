@@ -7,6 +7,10 @@ function getAdminToken() {
     return localStorage.getItem("adminToken");
 }
 
+function getUserToken() {
+    return localStorage.getItem("userToken");
+}
+
 async function login({ email, password }) {
     const formData = {
         email,
@@ -193,49 +197,54 @@ async function deleteProduk(id) {
 }
 
 async function addProduct(product) {
-    // let data = new FormData();
-    // data.append(
-    //     "file",
-    //     fs.createReadStream("/Users/extramarks/Downloads/bad.jpeg")
-    // );
-    // data.append("name", "produk5");
-    // data.append("stock", "100");
-    // data.append("harga", "100");
-    // data.append("product_category_id", "5");
-    // data.append("description", "ini adalah description");
-
-    // let config = {
-    //     method: "post",
-    //     maxBodyLength: Infinity,
-    //     url: "http://localhost:3000/api/v1/product/addProduct",
-    //     headers: {
-    //         Authorization:
-    //             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGVfaWQiOjEsImlhdCI6MTY5Mjc3Nzg1MywiZXhwIjoxNjkyODY0MjUzfQ.2UKLS1fFdeXIah9mvK6Y4BRrQcS8_tgeJWCqwsA44K8",
-    //         ...data.getHeaders(),
-    //     },
-    //     data: data,
-    // };
-
-    // axios
-    //     .request(config)
-    //     .then((response) => {
-    //         console.log(JSON.stringify(response.data));
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
-    
-    // let formData = new FormData();
-    // formData.append("file", file);
-    // formData.append("name", name);
-    // formData.append("stock", stock);
-    // formData.append("harga", harga);
-    // formData.append("product_category_id", product_category_id);
-    // formData.append("description", description);
-
     try {
         const hitApiLogin = await axios.post(
             `${BASE_URL}/api/v1/product/addProduct`,
+            product,
+            {
+                headers: {
+                    Authorization: `Bearer ${getAdminToken()}`,
+                },
+            }
+        );
+
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
+    } catch (error) {
+        // console.error("Error logging in:", error);
+        return { error: true, data: null };
+    }
+}
+
+async function getProductDetail(id) {
+    try {
+        const hitApiLogin = await axios.get(
+            `${BASE_URL}/api/v1/product/list/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getUserToken()}`,
+                },
+            }
+        );
+
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
+    } catch (error) {
+        // console.error("Error logging in:", error);
+        return { error: true, data: null };
+    }
+}
+
+async function modifyProduct(product, id) {
+    try {
+        const hitApiLogin = await axios.patch(
+            `${BASE_URL}/api/v1/product/list/${id}`,
             product,
             {
                 headers: {
@@ -314,6 +323,4 @@ export {
     deleteProduk,
     getAllCategory,
     addProduct,
-    GetAllTransactionUser,
-    KonfrimasiPembayaran,
 };
