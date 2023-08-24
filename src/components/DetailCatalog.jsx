@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import DetailCatalogAction from "./DetailCatalogAction";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
+import { beliProduk } from "../utils/api";
 
 function DetailCatalog({
     // stock,
@@ -12,6 +14,7 @@ function DetailCatalog({
     harga,
     description,
 }) {
+    const navigate = useNavigate();
     const [stock, setStock] = useState(1);
     const [final_amount, setFinalAmount] = useState("");
 
@@ -31,14 +34,34 @@ function DetailCatalog({
     const [payment_method, setPaymentMethod] = useState(1);
 
     const idKocak = window.location.pathname.split("/");
-    const product_id = idKocak[2];
+    const product_id = parseInt(idKocak[2]);
 
-    console.log(final_amount);
+    // console.log(final_amount);
 
     useEffect(() => {
         const calculatedAmount = stock * harga;
         setFinalAmount(calculatedAmount);
     }, [stock, harga]);
+
+    async function handleBeliProduk() {
+        const dataToSend = {
+            product_id,
+            stock,
+            payment_method,
+            final_amount,
+        };
+
+        const { error, data } = await beliProduk(dataToSend);
+
+        if (!error) {
+            console.log("Produk berhasil dibeli!", data);
+            navigate("/pemesanan");
+            // Tambahkan logika atau tindakan lain yang sesuai setelah pembelian berhasil
+        } else {
+            console.log("Terjadi kesalahan saat membeli produk.");
+            // Tambahkan logika atau tindakan lain yang sesuai jika terjadi kesalahan
+        }
+    }
 
     return (
         <div
@@ -93,7 +116,10 @@ function DetailCatalog({
                                 </button>
                             </div>
                             <div>
-                                <button className="btn bgc_btn">
+                                <button
+                                    className="btn bgc_btn"
+                                    onClick={handleBeliProduk}
+                                >
                                     Pesan Sekarang
                                 </button>
                             </div>

@@ -18,6 +18,13 @@ function Navigation({ isLoggedIn, onLogout }) {
                         {isLoggedIn ? (
                             <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
                                 <li className="nav-item me-4">
+                                    <Link to={"/pemesanan"}>
+                                        <button className="btn">
+                                            Pesanan Saya
+                                        </button>
+                                    </Link>
+                                </li>
+                                <li className="nav-item me-4">
                                     <button className="btn" onClick={onLogout}>
                                         Logout
                                     </button>

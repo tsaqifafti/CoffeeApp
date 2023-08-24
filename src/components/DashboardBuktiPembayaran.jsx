@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "../styles/sb-admin-2.min.css";
 import { FiTrash2, FiCheck, FiImage } from "react-icons/fi";
 import backgroundImg from "../img/100.jpeg";
@@ -6,40 +6,45 @@ import backgroundImg1 from "../img/800.jpeg";
 import { useReactToPrint } from "react-to-print";
 import { DeletePembayaran, UpdatePembayaran } from "../utils/api";
 
-function DashboardBuktiPembayaran({transactionList}) {
+function DashboardBuktiPembayaran({ transactionList }) {
     const conponentPDF = useRef();
+    const [selectedProductId, setSelectedProductId] = useState(null);
+
+    const openImageModal = (productId) => {
+        setSelectedProductId(productId);
+    };
 
     const handleUpdate = async (id) => {
         console.log("id cok");
         if (id) {
-        try {
-            const {data,error} = await UpdatePembayaran(id)
-            if (!error) {
-                alert(data.message)
-                window.location.reload()
-            }          
-        } catch (error) {
-            console.error('Error:', error);
-        }
+            try {
+                const { data, error } = await UpdatePembayaran(id);
+                if (!error) {
+                    alert(data.message);
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
         } else {
-        console.log('Please provide ID.');
+            console.log("Please provide ID.");
         }
     };
 
     const handleDelete = async (id) => {
         console.log("id cok");
         if (id) {
-        try {
-            const {data,error} = await DeletePembayaran(id)
-            if (!error) {
-                alert(data.message)
-                window.location.reload()
-            }          
-        } catch (error) {
-            console.error('Error:', error);
-        }
+            try {
+                const { data, error } = await DeletePembayaran(id);
+                if (!error) {
+                    alert(data.message);
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
         } else {
-        console.log('Please provide ID.');
+            console.log("Please provide ID.");
         }
     };
 
@@ -135,7 +140,7 @@ function DashboardBuktiPembayaran({transactionList}) {
                                             cellSpacing="0"
                                         >
                                             <thead className="text-center">
-                                            <tr>
+                                                <tr>
                                                     <th>id</th>
                                                     <th>Name</th>
                                                     <th>Struk</th>
@@ -157,41 +162,80 @@ function DashboardBuktiPembayaran({transactionList}) {
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                {transactionList.map((items) => (
-                                                    <tr>
-                                                    <td>{items.id}</td>
-                                                    <td>{items.User.name}</td>
-                                                    <td>
-                                                        {items.product.name},
-                                                        Qty : {items.stock}, 
-                                                        Total : {items.final_amount}
-                                                    </td>
-                                                    <td>
-                                                        {items.User.address}
-                                                    </td>
-                                                    <td>{items.status}</td>
-                                                    <td className="text-center">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-warning"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal"
-                                                        >
-                                                            <FiImage />
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <div className="d-flex">
-                                                            <button className="btn btn-circle p-0 text-light bg-success me-1" onClick={() => handleUpdate(items.id)}>
-                                                                <FiCheck />
-                                                            </button>
-                                                            <button className="btn btn-circle p-0 text-light bg-danger" onClick={() => handleDelete(items.id)}>
-                                                                <FiTrash2 />
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                ))}
+                                                {transactionList.map(
+                                                    (items) => (
+                                                        <tr>
+                                                            <td>{items.id}</td>
+                                                            <td>
+                                                                {
+                                                                    items.User
+                                                                        .name
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    items
+                                                                        .product
+                                                                        .name
+                                                                }
+                                                                , Qty :{" "}
+                                                                {items.stock},
+                                                                Total :{" "}
+                                                                {
+                                                                    items.final_amount
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    items.User
+                                                                        .address
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {items.status}
+                                                            </td>
+                                                            <td className="text-center">
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-warning"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#exampleModal"
+                                                                    onClick={() =>
+                                                                        openImageModal(
+                                                                            items.id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <FiImage />
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex">
+                                                                    <button
+                                                                        className="btn btn-circle p-0 text-light bg-success me-1"
+                                                                        onClick={() =>
+                                                                            handleUpdate(
+                                                                                items.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <FiCheck />
+                                                                    </button>
+                                                                    <button
+                                                                        className="btn btn-circle p-0 text-light bg-danger"
+                                                                        onClick={() =>
+                                                                            handleDelete(
+                                                                                items.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <FiTrash2 />
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>
@@ -206,6 +250,114 @@ function DashboardBuktiPembayaran({transactionList}) {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div
+                        className="modal fade"
+                        id="exampleModal"
+                        tabIndex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5
+                                        className="modal-title"
+                                        id="exampleModalLabel"
+                                    >
+                                        Gambar Produk
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <div className="modal-body">
+                                    {selectedProductId && (
+                                        <img
+                                            src={`http://localhost:3000/${
+                                                transactionList.find(
+                                                    (transaction) =>
+                                                        transaction.id ===
+                                                        selectedProductId
+                                                ).confirm_payment_image
+                                            }`}
+                                            className="card-img-top"
+                                            alt="..."
+                                        />
+                                    )}
+                                </div>
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className=" table-resposive" tabIndex="-1">
+                        <div ref={conponentPDF} style={{ width: "100%" }}>
+                            <table
+                                className="table table-bordered"
+                                id="dataTable"
+                                width="100%"
+                                cellSpacing="0"
+                            >
+                                <thead className="text-center">
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Name</th>
+                                        <th>Struk</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Bukti Pembayaran</th>
+                                    </tr>
+                                </thead>
+                                <tfoot className="text-center">
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Name</th>
+                                        <th>Struk</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Bukti Pembayaran</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {transactionList.map((items) => (
+                                        <tr>
+                                            <td>{items.id}</td>
+                                            <td>{items.User.name}</td>
+                                            <td>
+                                                {items.product.name}, Qty :{" "}
+                                                {items.stock}, Total :{" "}
+                                                {items.final_amount}
+                                            </td>
+                                            <td>{items.User.address}</td>
+                                            <td>{items.status}</td>
+                                            <td className="text-center">
+                                                <img
+                                                    src={`http://localhost:3000/${items.confirm_payment_image}
+                                                    `}
+                                                    className="card-img-top"
+                                                    alt="..."
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "20vh",
+                                                    }}
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <footer className="sticky-footer bg-gradient-light">

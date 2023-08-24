@@ -270,7 +270,9 @@ async function GetAllTransactionUser() {
             `${BASE_URL}/api/v1/transaction/listuser`,
             {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -280,22 +282,22 @@ async function GetAllTransactionUser() {
         } else {
             return { error: true, data: null };
         }
-
-
     } catch (error) {
         return { error: true, data: null };
     }
 }
 
-async function KonfrimasiPembayaran(data,id) {
+async function KonfrimasiPembayaran(data, id) {
     try {
-        console.log("data : ", data, "id : ",id);
+        console.log("data : ", data, "id : ", id);
         const hitApiLogin = await axios.patch(
             `${BASE_URL}/api/v1/user/transaction/confirm/${id}`,
             data,
             {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "userToken"
+                    )}`,
                 },
             }
         );
@@ -305,8 +307,30 @@ async function KonfrimasiPembayaran(data,id) {
         } else {
             return { error: true, data: null };
         }
+    } catch (error) {
+        return { error: true, data: null };
+    }
+}
 
+async function beliProduk(data) {
+    try {
+        const hitApiLogin = await axios.post(
+            `${BASE_URL}/api/v1/transaction/buy`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "userToken"
+                    )}`,
+                },
+            }
+        );
 
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
     } catch (error) {
         return { error: true, data: null };
     }
@@ -314,7 +338,7 @@ async function KonfrimasiPembayaran(data,id) {
 
 async function UpdatePembayaran(id) {
     try {
-        const data = {}
+        const data = {};
         const hitApiLogin = await axios.patch(
             `${BASE_URL}/api/v1/transaction/list/${id}`,
             data,
@@ -330,8 +354,6 @@ async function UpdatePembayaran(id) {
         } else {
             return { error: true, data: null };
         }
-
-
     } catch (error) {
         return { error: true, data: null };
     }
@@ -353,8 +375,6 @@ async function DeletePembayaran(id) {
         } else {
             return { error: true, data: null };
         }
-
-
     } catch (error) {
         return { error: true, data: null };
     }
@@ -376,5 +396,6 @@ export {
     modifyProduct,
     getProductDetail,
     UpdatePembayaran,
-    DeletePembayaran
+    DeletePembayaran,
+    beliProduk,
 };
