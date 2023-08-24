@@ -22,5 +22,4 @@ function CatalogList({ filteredCatalog, setPilihCategory }) {
     );
 }
 
-
 export default CatalogList;

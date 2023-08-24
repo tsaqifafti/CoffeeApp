@@ -64,14 +64,28 @@ function DashboardProduk({
     const onSubmitModifyEventHandler = (event) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append("name", name);
-        formData.append("stock", stock);
-        formData.append("harga", harga);
-        formData.append("description", description);
-        formData.append("product_category_id", product_category_id);
-        formData.append("file", file); // Mengirim file dalam FormData
+        // formData.append("name", name);
+        // formData.append("stock", stock);
+        // formData.append("harga", harga);
+        // formData.append("description", description);
+        // formData.append("product_category_id", product_category_id);
+        // formData.append("file", file); // Mengirim file dalam FormData
 
-        modifyProduk(formData); // Mengirimkan FormData ke fungsi addProduk
+        // modifyProduk(formData, selectedProductId); // Mengirimkan FormData ke fungsi addProduk
+        // console.log(selectedProductId);
+        if (name.length > 0) {
+            formData.append("name", name);
+        } else if (harga.length > 0) {
+            formData.append("harga", harga);
+        } else if (description.length > 0) {
+            formData.append("description", description);
+        } else if (product_category_id.length > 0) {
+            formData.append("product_category_id", product_category_id);
+        } else if (file.name != undefined) {
+            formData.append("file", file);
+        }
+
+        modifyProduk(formData, selectedProductId);
     };
 
     const generatePDF = useReactToPrint({
@@ -232,6 +246,11 @@ function DashboardProduk({
                                                                     className="btn btn-circle p-0 text-light bg-success me-1"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#modifyModal"
+                                                                    onClick={() =>
+                                                                        openImageModal(
+                                                                            product.id
+                                                                        )
+                                                                    }
                                                                 >
                                                                     <FiSettings />
                                                                 </button>
@@ -489,12 +508,27 @@ function DashboardProduk({
                             >
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                        <h5
-                                            className="modal-title"
-                                            id="exampleModalLabel"
-                                        >
-                                            Edit Produk
-                                        </h5>
+                                        {selectedProductId && (
+                                            <h5
+                                                className="modal-title"
+                                                id="exampleModalLabel"
+                                            >
+                                                Edit Produk :{" "}
+                                                {
+                                                    productList.find(
+                                                        (product) =>
+                                                            product.id ===
+                                                            selectedProductId
+                                                    ).id
+                                                }
+                                            </h5>
+                                            // <img
+                                            //     src={`http://localhost:3000/$}`}
+                                            //     className="card-img-top"
+                                            //     alt="..."
+                                            // />
+                                        )}
+
                                         <button
                                             type="button"
                                             className="btn-close"
@@ -518,21 +552,6 @@ function DashboardProduk({
                                                 id="judul-name"
                                             />
                                         </div>
-                                        {/* <div className="mb-3">
-                                            <label
-                                                htmlFor="harga-name"
-                                                className="col-form-label"
-                                            >
-                                                Stock :
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={stock}
-                                                onChange={handleStockChange}
-                                                id="judul-name"
-                                            />
-                                        </div> */}
                                         <div className="mb-3">
                                             <label
                                                 htmlFor="harga-name"
