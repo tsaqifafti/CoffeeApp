@@ -312,6 +312,54 @@ async function KonfrimasiPembayaran(data,id) {
     }
 }
 
+async function UpdatePembayaran(id) {
+    try {
+        const data = {}
+        const hitApiLogin = await axios.patch(
+            `${BASE_URL}/api/v1/transaction/list/${id}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${getAdminToken()}`,
+                },
+            }
+        );
+
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
+
+
+    } catch (error) {
+        return { error: true, data: null };
+    }
+}
+
+async function DeletePembayaran(id) {
+    try {
+        const hitApiLogin = await axios.delete(
+            `${BASE_URL}/api/v1/transaction/list/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getAdminToken()}`,
+                },
+            }
+        );
+
+        if (hitApiLogin.status === 200) {
+            return { error: false, data: hitApiLogin.data };
+        } else {
+            return { error: true, data: null };
+        }
+
+
+    } catch (error) {
+        return { error: true, data: null };
+    }
+}
+
 export {
     login,
     loginAdmin,
@@ -326,5 +374,7 @@ export {
     KonfrimasiPembayaran,
     GetAllTransactionUser,
     modifyProduct,
-    getProductDetail
+    getProductDetail,
+    UpdatePembayaran,
+    DeletePembayaran
 };

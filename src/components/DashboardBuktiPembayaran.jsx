@@ -4,9 +4,44 @@ import { FiTrash2, FiCheck, FiImage } from "react-icons/fi";
 import backgroundImg from "../img/100.jpeg";
 import backgroundImg1 from "../img/800.jpeg";
 import { useReactToPrint } from "react-to-print";
+import { DeletePembayaran, UpdatePembayaran } from "../utils/api";
 
-function DashboardBuktiPembayaran() {
+function DashboardBuktiPembayaran({transactionList}) {
     const conponentPDF = useRef();
+
+    const handleUpdate = async (id) => {
+        console.log("id cok");
+        if (id) {
+        try {
+            const {data,error} = await UpdatePembayaran(id)
+            if (!error) {
+                alert(data.message)
+                window.location.reload()
+            }          
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        } else {
+        console.log('Please provide ID.');
+        }
+    };
+
+    const handleDelete = async (id) => {
+        console.log("id cok");
+        if (id) {
+        try {
+            const {data,error} = await DeletePembayaran(id)
+            if (!error) {
+                alert(data.message)
+                window.location.reload()
+            }          
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        } else {
+        console.log('Please provide ID.');
+        }
+    };
 
     const generatePDF = useReactToPrint({
         content: () => conponentPDF.current,
@@ -100,11 +135,12 @@ function DashboardBuktiPembayaran() {
                                             cellSpacing="0"
                                         >
                                             <thead className="text-center">
-                                                <tr>
+                                            <tr>
                                                     <th>id</th>
                                                     <th>Name</th>
                                                     <th>Struk</th>
                                                     <th>Alamat</th>
+                                                    <th>Status</th>
                                                     <th>Bukti Pembayaran</th>
                                                     <th>Aksi</th>
                                                 </tr>
@@ -115,24 +151,25 @@ function DashboardBuktiPembayaran() {
                                                     <th>Name</th>
                                                     <th>Struk</th>
                                                     <th>Alamat</th>
+                                                    <th>Status</th>
                                                     <th>Bukti Pembayaran</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Maulana</td>
+                                                {transactionList.map((items) => (
+                                                    <tr>
+                                                    <td>{items.id}</td>
+                                                    <td>{items.User.name}</td>
                                                     <td>
-                                                        Kopi Robusta Bali 200g,
-                                                        Qty : 10, Total :
-                                                        800.000
+                                                        {items.product.name},
+                                                        Qty : {items.stock}, 
+                                                        Total : {items.final_amount}
                                                     </td>
                                                     <td>
-                                                        Jl. H. Baping Gg. Setia
-                                                        Rt16/07 no 214 Jakarta
-                                                        Timur, POS : 16779
+                                                        {items.User.address}
                                                     </td>
+                                                    <td>{items.status}</td>
                                                     <td className="text-center">
                                                         <button
                                                             type="button"
@@ -145,49 +182,16 @@ function DashboardBuktiPembayaran() {
                                                     </td>
                                                     <td>
                                                         <div className="d-flex">
-                                                            <button className="btn btn-circle p-0 text-light bg-success me-1">
+                                                            <button className="btn btn-circle p-0 text-light bg-success me-1" onClick={() => handleUpdate(items.id)}>
                                                                 <FiCheck />
                                                             </button>
-                                                            <button className="btn btn-circle p-0 text-light bg-danger">
+                                                            <button className="btn btn-circle p-0 text-light bg-danger" onClick={() => handleDelete(items.id)}>
                                                                 <FiTrash2 />
                                                             </button>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>dapi</td>
-                                                    <td>
-                                                        Kopi Robusta Aceh Gayo
-                                                        200g, Qty : 2, Total :
-                                                        100.000
-                                                    </td>
-                                                    <td>
-                                                        Jl. Dukuh Gg. ASGO
-                                                        Rt01/07 no 44 Jakarta
-                                                        Timur, POS : 16119
-                                                    </td>
-                                                    <td className="text-center">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-warning"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal"
-                                                        >
-                                                            <FiImage />
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <div className="d-flex">
-                                                            <button className="btn btn-circle p-0 text-light bg-success me-1">
-                                                                <FiCheck />
-                                                            </button>
-                                                            <button className="btn btn-circle p-0 text-light bg-danger">
-                                                                <FiTrash2 />
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                ))}
                                             </tbody>
                                         </table>
                                     </div>
@@ -202,122 +206,6 @@ function DashboardBuktiPembayaran() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div
-                        className="modal fade"
-                        id="exampleModal"
-                        tabIndex="-1"
-                        aria-labelledby="exampleModalLabel"
-                        aria-hidden="true"
-                    >
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5
-                                        className="modal-title"
-                                        id="exampleModalLabel"
-                                    >
-                                        Bukti Pembayaran
-                                    </h5>
-                                    <button
-                                        type="button"
-                                        className="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                    ></button>
-                                </div>
-                                <div className="modal-body">
-                                    <img
-                                        src={backgroundImg}
-                                        className="card-img-top"
-                                        alt="..."
-                                    />
-                                </div>
-                                <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="modal fade table-resposive" tabIndex="-1">
-                        <div ref={conponentPDF} style={{ width: "100%" }}>
-                            <table
-                                className="table table-bordered"
-                                id="dataTable"
-                                width="100%"
-                                cellSpacing="0"
-                            >
-                                <thead className="text-center">
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Name</th>
-                                        <th>Struk</th>
-                                        <th>Alamat</th>
-                                        <th>Bukti Pembayaran</th>
-                                    </tr>
-                                </thead>
-                                <tfoot className="text-center">
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Name</th>
-                                        <th>Struk</th>
-                                        <th>Alamat</th>
-                                        <th>Bukti Pembayaran</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Maulana</td>
-                                        <td>
-                                            Kopi Robusta Bali 200g, Qty : 10,
-                                            Total : 800.000
-                                        </td>
-                                        <td>
-                                            Jl. H. Baping Gg. Setia Rt16/07 no
-                                            214 Jakarta Timur, POS : 16779
-                                        </td>
-                                        <td className="text-center">
-                                            <img
-                                                src={backgroundImg1}
-                                                className="card-img-top"
-                                                alt="..."
-                                                style={{
-                                                    width: "20vh",
-                                                    height: "20vh",
-                                                }}
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>dapi</td>
-                                        <td>
-                                            Kopi Robusta Aceh Gayo 200g, Qty :
-                                            2, Total : 100.000
-                                        </td>
-                                        <td>
-                                            Jl. Dukuh Gg. ASGO Rt01/07 no 44
-                                            Jakarta Timur, POS : 16119
-                                        </td>
-                                        <td className="text-center">
-                                            <img
-                                                src={backgroundImg}
-                                                className="card-img-bottom"
-                                                alt="..."
-                                                style={{ height: "20vh" }}
-                                            />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                     <footer className="sticky-footer bg-gradient-light">
