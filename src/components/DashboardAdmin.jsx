@@ -183,26 +183,15 @@ function DashboardAdmin({ userList, onDelete }) {
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Maulana</td>
-                                        <td>maulana@gmail.com</td>
-                                        <td>oadw123456</td>
-                                        <td>
-                                            Jl. H. Baping Gg. Setia Rt16/07 no
-                                            214 Jakarta Timur, POS : 16779
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>dapi</td>
-                                        <td>baydapi@gmail.com</td>
-                                        <td>simaa16sd</td>
-                                        <td>
-                                            Jl. Dukuh Gg. ASGO Rt01/07 no 44
-                                            Jakarta Timur, POS : 16119
-                                        </td>
-                                    </tr>
+                                    {userList.map((user) => (
+                                        <tr key={user.id}>
+                                            <td>{user.id}</td>
+                                            <td>{user.name}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.password}</td>
+                                            <td>{user.address}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
