@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DetailCatalog from "../components/DetailCatalog";
 import { getProduct } from "../utils/local_data";
 import { useParams } from "react-router-dom";
+import "../styles/style.css";
 
 function DetailPage() {
     const [count, setCount] = useState(1);

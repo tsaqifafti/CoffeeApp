@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CatalogList from "../components/CatalogList";
-import axios from "axios";
-import { getData } from "../utils/local_data";
-
-const baseURL = "https://cofeeapp.free.beeceptor.com/list";
+// import { getData } from "../utils/local_data";
+import { getAllProduct } from "../utils/api";
+import "../styles/style.css";
 
 function CatalogPage() {
     const [catalog, setCatalog] = useState([]);
@@ -14,15 +13,32 @@ function CatalogPage() {
         //     setCatalog(response.data);
         // });
 
-        const data = getData();
+        // const data = getData();
 
-        setCatalog(data.data);
+        // setCatalog(data.data);
+        async function fetchProductData() {
+            try {
+                const { error, data } = await getAllProduct();
+
+                if (!error) {
+                    setCatalog(data.data);
+                }
+            } catch (error) {
+                console.log(`tidak ada produk`);
+            }
+        }
+
+        fetchProductData();
     }, []);
+
+    console.table(catalog);
 
     const filteredCatalog =
         pilihCategory === "Semua"
             ? catalog
-            : catalog.filter((item) => item.category === pilihCategory);
+            : catalog.filter(
+                  (item) => item.product_category.name === pilihCategory
+              );
     return (
         <>
             <CatalogList

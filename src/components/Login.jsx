@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function Login() {
+function Login({ login }) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const onEmailChangeHandler = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const onPasswordChangeHandler = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+        login({
+            email,
+            password,
+        });
+    };
+
     return (
         <div
             className="card p-5"
@@ -10,7 +30,7 @@ function Login() {
                 border: "1px solid rgba(0, 0, 0, 0.2)",
             }}
         >
-            <form>
+            <form onSubmit={onSubmitHandler}>
                 <h1
                     className="fs-4"
                     style={{ marginBottom: "10px", textAlign: "center" }}
@@ -25,6 +45,8 @@ function Login() {
                         type="email"
                         className="form-control"
                         id="exampleInputEmail1"
+                        value={email}
+                        onChange={onEmailChangeHandler}
                         style={{
                             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
                             border: "1px solid rgba(0, 0, 0, 0.2)",
@@ -39,6 +61,8 @@ function Login() {
                         type="password"
                         className="form-control"
                         id="exampleInputPassword1"
+                        value={password}
+                        onChange={onPasswordChangeHandler}
                         style={{
                             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
                             border: "1px solid rgba(0, 0, 0, 0.2)",
@@ -49,6 +73,9 @@ function Login() {
                     Submit
                 </button>
             </form>
+            <small className="text-center">
+                Belum memiliki akun ? <Link to={"/daftar"}>Daftar</Link>
+            </small>
         </div>
     );
 }

@@ -32,9 +32,9 @@ function DetailCatalog({
                     <div className="card-body">
                         <h5 className="card-title fw-bold">{title}</h5>
                         <p className="card-text">
-                            This is a wider card with supporting text below as a
-                            natural lead-in to additional content. This content
-                            is a little bit longer.
+                            Varietas tanaman kopi robusta dengan mudah tumbuh di
+                            wilayah tanam di Arul Kumer, diproses Natural
+                            kemudian disangrai medium roast.
                         </p>
                         <p
                             className="card-text fs-1"
@@ -54,5 +54,6 @@ function DetailCatalog({
         </div>
     );
 }
+
 
 export default DetailCatalog;

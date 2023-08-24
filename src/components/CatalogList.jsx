@@ -6,7 +6,7 @@ function CatalogList({ filteredCatalog, setPilihCategory }) {
     return (
         <>
             <CatalogCategory setPilihCategory={setPilihCategory} />
-            <div className="container" style={{ marginBottom: "5rem" }}>
+            <div className="container" style={{ marginBottom: "8rem" }}>
                 <div className="row align-items-start">
                     {filteredCatalog.map((item) => (
                         <div
@@ -21,5 +21,6 @@ function CatalogList({ filteredCatalog, setPilihCategory }) {
         </>
     );
 }
+
 
 export default CatalogList;
